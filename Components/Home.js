@@ -1,46 +1,35 @@
 import React,{Component} from 'react'
-import {View,Text,TouchableOpacity} from 'react-native'
-
+import {View,Text,TouchableOpacity,Button} from 'react-native'
+import {getAll} from '../Database'
 class Home extends Component{
     static navigationOptions = {
         title: 'Home'
       };
 constructor(){
     super();
-    this.state={
-        notes:[
-            {
-                name:"gente",
-                content:"valeria,carlos,yizi"
-            },
-            {
-                name:"Nota Cool",
-                content:"esta nota esta brutal"
-            }
-        ]
-
-    }
 }
 
-    updateNote(note,index){
-       console.log('Notes Before: '+JSON.stringify(this.state.notes))
-       let newNotes = this.state.notes
-       newNotes[index]=note
-       console.log("notes after: "+JSON.stringify(newNotes))
-       this.setState({notes:NewNotes})
+    componentDidMount(){   
+         console.log("these are the current notes"+JSON.stringify(getAll()))
+
+
     }
 
     goToEdit(note,index){
-        console.log("navigating "+JSON.stringify(note))
+        console.log("navigating to Edit "+JSON.stringify(note))
         this.props.navigation.navigate("Edit",{
             note:note,
             index:index,
             updateNote:this.UpdateNote
         })
     }
+    goToAdd(){
+        console.log("navigating to Add ")
+        this.props.navigation.navigate("Add")
+    }
 
     render(){
-
+            let notes=getAll()
         return(
 
             <View>
@@ -48,7 +37,7 @@ constructor(){
                      Home
                 </Text>
                 <View>
-                {this.state.notes.map((note,index)=>(
+                {notes.map((note,index)=>(
                     <TouchableOpacity key={index} onPress={()=>this.goToEdit(note,index)}>
                     <Text>
                         Note title: {note.name}
@@ -60,6 +49,10 @@ constructor(){
                     
                 ))}
                 </View>
+                <Button onPress={()=>this.goToAdd()} 
+                title="Add Note"
+                color="teal"
+                />
             </View>
 
         )

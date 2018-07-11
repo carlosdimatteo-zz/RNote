@@ -3,6 +3,7 @@ import React from 'react';
 import {createStackNavigator} from 'react-navigation'
 import NoteEdit from './Components/NoteEdit'
 import Home from './Components/Home'
+import AddNote from './Components/AddNote'
 export default class App extends React.Component {
   render() {
     return (
@@ -22,7 +23,8 @@ export default class App extends React.Component {
 
 const Routes = createStackNavigator({
     Home:Home,
-    Edit:NoteEdit
+    Edit:NoteEdit,
+    Add:AddNote
     },{
       initialRouteName:'Home'
     });                                    

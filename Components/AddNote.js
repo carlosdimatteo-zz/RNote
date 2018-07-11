@@ -1,11 +1,11 @@
 import React,{Component} from 'react'
 import {View,Text,TextInput,Button} from 'react-native'
-import {updateNotes} from '../Database'
+import {addNote} from '../Database'
 
 
 class NoteEdit extends Component{
     static navigationOptions = {
-        title: 'Note'
+        title: 'Create'
       };
     constructor(){
         super();
@@ -19,13 +19,11 @@ class NoteEdit extends Component{
     }
 
 
-    componentDidMount(){
-        let note = this.props.navigation.getParam('note')
-        this.setState({note:note});
-    }
+    
 
-    update(){
-        updateNotes(this.state.note)
+    add(){
+        
+        addNote(this.state.note)
         // this.props.navigation.goBack()
     }
 
@@ -58,9 +56,9 @@ class NoteEdit extends Component{
                     value={this.state.note.content}
                     placeholder={this.state.note.content}
                 />
-                <Button onPress={()=>this.update()}
-                title="Update Note"
-                color="black"
+                <Button onPress={()=>this.add()}
+                title="Add Note"
+                color="brown"
                 />
             </View>
 
