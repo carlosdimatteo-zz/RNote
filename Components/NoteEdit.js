@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {View,Text,TextInput,Button} from 'react-native'
-import {updateNotes} from '../Database'
+import {View,Text,TextInput,Button,Alert} from 'react-native'
+import {database} from '../Database'
 
 
 class NoteEdit extends Component{
@@ -25,9 +25,37 @@ class NoteEdit extends Component{
     }
 
     update(){
-        updateNotes(this.state.note)
-        // this.props.navigation.goBack()
+        let id = this.props.navigation.getParam('id')
+        // console.log('Notes Before: '+JSON.stringify(notes))
+    let updates={}
+    updates['/notes/'+id]=this.state.note
+    database.ref().update(updates,(error)=>{
+        if(error){
+            console.log('unsuccesful operation')
+            Alert.alert('Failed','Could not update note',[{text:'OK'}])
+        }else{
+            console.log(JSON.stringify(getAll()))
+            Alert.alert('Success','Note Updated',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
+            
+        }
+    })
+        // console.log("notes after: "+JSON.stringify(notes))
     }
+
+    delete(){
+        let id = this.props.navigation.getParam('id')
+        database.ref('/notes/'+id).set(null,(error)=>{
+        
+            if(error){
+                console.log('unsuccesful operation')
+                Alert.alert('Failed','Could not delete note',[{text:'OK'}])            }else{
+                    console.log('note deleted')
+                    Alert.alert('Success','Note Deleted',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
+            }
+        })
+        
+           
+        }
 
 
     render(){
@@ -62,11 +90,16 @@ class NoteEdit extends Component{
                 title="Update Note"
                 color="black"
                 />
+                <Button onPress={()=>this.delete()}
+                title="Delete Note"
+                color="red"
+                />
             </View>
 
         )
     }
-
-
 }
+
+
+
 export default NoteEdit

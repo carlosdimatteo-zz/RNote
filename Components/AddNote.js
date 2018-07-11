@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {View,Text,TextInput,Button} from 'react-native'
-import {addNote} from '../Database'
+import {View,Text,TextInput,Button,Alert} from 'react-native'
+import {database} from '../Database'
 
 
 class NoteEdit extends Component{
@@ -22,10 +22,17 @@ class NoteEdit extends Component{
     
 
     add(){
-        
-        addNote(this.state.note)
-        // this.props.navigation.goBack()
-    }
+        database.ref('/notes').push().set(this.state.note,(error)=>{
+            if(error){
+                console.log('unsuccesful operation: '+error)
+                Alert.alert('Failed','Could not Add note',[{text:'OK'}])
+            }else{
+                console.log("Added Note")
+                Alert.alert('Success','Note Added',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
+            }
+        })
+            
+        }
 
 
     render(){

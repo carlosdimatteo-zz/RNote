@@ -5,6 +5,9 @@ import NoteEdit from './Components/NoteEdit'
 import Home from './Components/Home'
 import AddNote from './Components/AddNote'
 export default class App extends React.Component {
+  constructor(){
+    super()
+  }
   render() {
     return (
       <Routes/>

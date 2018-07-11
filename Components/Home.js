@@ -1,25 +1,34 @@
 import React,{Component} from 'react'
 import {View,Text,TouchableOpacity,Button} from 'react-native'
-import {getAll} from '../Database'
+import {database} from '../Database'
 class Home extends Component{
     static navigationOptions = {
         title: 'Home'
       };
 constructor(){
     super();
+    this.state={
+        notes:{}
+    }
 }
 
-    componentDidMount(){   
-         console.log("these are the current notes"+JSON.stringify(getAll()))
+
+    async componentDidMount(){   
+        let notesRef=database.ref('/notes')
+        await notesRef.once('value',(snapshot)=>{
+            notes=snapshot.val()
+            this.setState({notes:notes})
+            console.log("notes from db: "+JSON.stringify(JSON.stringify(this.state.notes)))
+        })
 
 
     }
 
-    goToEdit(note,index){
+    goToEdit(note,id){
         console.log("navigating to Edit "+JSON.stringify(note))
         this.props.navigation.navigate("Edit",{
             note:note,
-            index:index,
+            id:id,
             updateNote:this.UpdateNote
         })
     }
@@ -29,25 +38,24 @@ constructor(){
     }
 
     render(){
-            let notes=getAll()
+            let noteIds = this.state.notes ?Object.keys(this.state.notes):null
+
         return(
 
             <View>
-                <Text>
-                     Home
-                </Text>
+               
                 <View>
-                {notes.map((note,index)=>(
-                    <TouchableOpacity key={index} onPress={()=>this.goToEdit(note,index)}>
+                {noteIds!==null ? noteIds.map((noteId,index)=>(
+                    <TouchableOpacity key={index} onPress={()=>this.goToEdit(this.state.notes[noteId],noteId)}>
                     <Text>
-                        Note title: {note.name}
+                        Note title: {this.state.notes[noteId].name}
                     </Text>
                     <Text>
-                        Content: {note.content}
+                        Content: {this.state.notes[noteId].content}
                     </Text>
                     </TouchableOpacity>
                     
-                ))}
+                )):<Text>There are no Notes to show</Text>}
                 </View>
                 <Button onPress={()=>this.goToAdd()} 
                 title="Add Note"
