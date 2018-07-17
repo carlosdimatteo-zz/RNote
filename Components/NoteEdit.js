@@ -1,5 +1,7 @@
 import React,{Component} from 'react'
+
 import {View,Text,TextInput,Button,Alert, ScrollView, Image} from 'react-native'
+
 import {database} from '../Database'
 
 
@@ -52,10 +54,17 @@ class NoteEdit extends Component{
                     console.log('note deleted')
                     Alert.alert('Success','Note Deleted',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
             }
-        })
-        
-           
+        }) 
         }
+    share(){
+        
+            Share.share(
+            {
+                
+              message: "  -From RNote-\n"+"Title: "+this.state.note.name+"\nContent: "+this.state.note.content+"\n"
+            
+            }).then(result => console.log(result)).catch(errorMsg => console.log(errorMsg));
+    }
 
 
     render(){
@@ -105,6 +114,10 @@ class NoteEdit extends Component{
                     title="Delete Note"
                     color="#C40A4D"
                     />
+                    <Button onPress={()=>this.share()}
+                    title="Share note"
+                    color="lightgray"
+                />
             </View>
             </ScrollView>
 

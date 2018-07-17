@@ -17,19 +17,23 @@ constructor(){
         this.setState({notes:{}})
     }
 
-    async componentDidMount(){   
+    componentDidMount(){   
+        console.log('componentdidmount home')
+        
+    }
+
+    async getData(){
         let notesRef=database.ref('/notes')
         await notesRef.once('value',(snapshot)=>{
             notes=snapshot.val()
             this.setState({notes:notes})
             console.log("notes from db: "+JSON.stringify(JSON.stringify(this.state.notes)))
         })
-
-
     }
 
     goToEdit(note,id){
         console.log("navigating to Edit "+JSON.stringify(note))
+        this.setState({notes:{}})
         this.props.navigation.navigate("Edit",{
             note:note,
             id:id,
@@ -38,10 +42,12 @@ constructor(){
     }
     goToAdd(){
         console.log("navigating to Add ")
+        this.setState({notes:{}})
         this.props.navigation.navigate("Add")
     }
 
     render(){
+            this.getData()
             let noteIds = this.state.notes ?Object.keys(this.state.notes):null
 
         return(
