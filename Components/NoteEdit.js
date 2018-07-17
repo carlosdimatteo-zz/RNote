@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {View,Text,TextInput,Button,Alert} from 'react-native'
+import {View,TextInput,Button,Alert,Share} from 'react-native'
 import {database} from '../Database'
 
 
@@ -34,7 +34,6 @@ class NoteEdit extends Component{
             console.log('unsuccesful operation')
             Alert.alert('Failed','Could not update note',[{text:'OK'}])
         }else{
-            console.log(JSON.stringify(getAll()))
             Alert.alert('Success','Note Updated',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
             
         }
@@ -52,10 +51,17 @@ class NoteEdit extends Component{
                     console.log('note deleted')
                     Alert.alert('Success','Note Deleted',[{text:'OK',onPress:()=>this.props.navigation.navigate('Home')}])
             }
-        })
-        
-           
+        }) 
         }
+    share(){
+        
+            Share.share(
+            {
+                
+              message: "  -From RNote-\n"+"Title: "+this.state.note.name+"\nContent: "+this.state.note.content+"\n"
+            
+            }).then(result => console.log(result)).catch(errorMsg => console.log(errorMsg));
+    }
 
 
     render(){
@@ -93,6 +99,10 @@ class NoteEdit extends Component{
                 <Button onPress={()=>this.delete()}
                 title="Delete Note"
                 color="red"
+                />
+                <Button onPress={()=>this.share()}
+                    title="Share note"
+                    color="lightgray"
                 />
             </View>
 
