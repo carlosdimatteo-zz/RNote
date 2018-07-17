@@ -1,11 +1,14 @@
 import React,{Component} from 'react'
-import {View,TextInput,Button,Alert,Share} from 'react-native'
+
+import {View,Text,TextInput,Button,Alert, ScrollView, Image} from 'react-native'
+
 import {database} from '../Database'
 
 
 class NoteEdit extends Component{
     static navigationOptions = {
-        title: 'Note'
+        title: 'Note',
+        header: null
       };
     constructor(){
         super();
@@ -67,44 +70,56 @@ class NoteEdit extends Component{
     render(){
         
         return(
-
-            <View>
+            <ScrollView>
+            <View style={{flex: 1,flexDirection: 'column'}}>
+                <View style={{flex:1, flexDirection: 'column',alignItems: 'flex-start',marginTop:20}}>
+                    <Button onPress={()=>this.props.navigation.navigate('Home')}
+                        title="Home"
+                        color="#C40A4D"
+                    />
+                </View>
+                <View style={{marginTop:50,justifyContent: 'center',alignItems: 'center', marginBottom:50}}>
+                    <Image source={require('./../img/note.png')}/>
+                </View>
+                <Text style={{fontWeight:'bold', fontSize:20}}> Title </Text>
                 <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                    onChangeText={(name) => this.setState(prevState=>({
-                        note:{
-                            ...prevState.note,
-                            name
-                        }
-                    }))}
-                    value={this.state.note.name}
-                    placeholder={this.state.note.name}
-                />
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                    multiline={true}
-                    onChangeText={(content) => this.setState(prevState=>({
-                        note:{
-                            ...prevState.note,
-                            content
-                        }
-                    }))}
-                    value={this.state.note.content}
-                    placeholder={this.state.note.content}
-                />
-                <Button onPress={()=>this.update()}
-                title="Update Note"
-                color="black"
-                />
-                <Button onPress={()=>this.delete()}
-                title="Delete Note"
-                color="red"
-                />
-                <Button onPress={()=>this.share()}
+                        style={{height: 40}}
+                        onChangeText={(name) => this.setState(prevState=>({
+                            note:{
+                                ...prevState.note,
+                                name
+                            }
+                        }))}
+                        value={this.state.note.name}
+                        placeholder={this.state.note.name}
+                    />
+                    <Text style={{fontWeight:'bold', fontSize:20}}> Content </Text>
+                    <TextInput
+                        style={{height:150}}
+                        multiline={true}
+                        onChangeText={(content) => this.setState(prevState=>({
+                            note:{
+                                ...prevState.note,
+                                content
+                            }
+                        }))}
+                        value={this.state.note.content}
+                        placeholder={this.state.note.content}
+                    />
+                    <Button onPress={()=>this.update()}
+                    title="Update Note"
+                    color="#048775"
+                    />
+                    <Button onPress={()=>this.delete()}
+                    title="Delete Note"
+                    color="#C40A4D"
+                    />
+                    <Button onPress={()=>this.share()}
                     title="Share note"
                     color="lightgray"
                 />
             </View>
+            </ScrollView>
 
         )
     }
