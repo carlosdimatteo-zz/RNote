@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {View,Text,TextInput,Button,Alert,ScrollView, Image} from 'react-native'
 import {database} from '../Database'
+import {Theme} from './ThemeProvider';
 
 
 class NoteEdit extends Component{
@@ -36,6 +37,9 @@ class NoteEdit extends Component{
     render(){
         
         return(
+            <Theme.consumer>
+
+            
             <ScrollView>
             <View style={{flex: 1,flexDirection: 'column'}}>
             <View style={{flex:1, flexDirection: 'column',alignItems: 'flex-start',marginTop:20}}>
@@ -78,6 +82,7 @@ class NoteEdit extends Component{
                 />
             </View>
         </ScrollView>
+        </Theme.consumer>
         )
     }
 

@@ -70,7 +70,12 @@ class NoteEdit extends Component{
     render(){
         
         return(
-            <ScrollView>
+
+
+            <Theme.consumer>
+            {({colors :{primary,secondary,dark,light,textDefault,textPrimary,textSecondary}})=>(
+
+                <ScrollView>
             <View style={{flex: 1,flexDirection: 'column'}}>
                 <View style={{flex:1, flexDirection: 'column',alignItems: 'flex-start',marginTop:20}}>
                     <Button onPress={()=>this.props.navigation.navigate('Home')}
@@ -121,6 +126,13 @@ class NoteEdit extends Component{
             </View>
             </ScrollView>
 
+
+            )}
+            
+            
+        </Theme.consumer>
+
+            
         )
     }
 }

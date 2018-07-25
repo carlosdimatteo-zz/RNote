@@ -4,13 +4,17 @@ import {createStackNavigator} from 'react-navigation'
 import NoteEdit from './Components/NoteEdit'
 import Home from './Components/Home'
 import AddNote from './Components/AddNote'
+import ThemeProvider from './Components/Themeprovider'
 export default class App extends React.Component {
   constructor(){
     super()
   }
   render() {
     return (
-      <Routes/>
+      <ThemeProvider>
+        <Routes/>
+      </ThemeProvider>
+      
     );
   }
 }
