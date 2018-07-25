@@ -37,9 +37,9 @@ class NoteEdit extends Component{
     render(){
         
         return(
-            <Theme.consumer>
+            <Theme.Consumer>
 
-            
+            {({theme:{colors :{primary,secondary,dark,light,textDefault,textPrimary,textSecondary}},changeTheme})=>(
             <ScrollView>
             <View style={{flex: 1,flexDirection: 'column'}}>
             <View style={{flex:1, flexDirection: 'column',alignItems: 'flex-start',marginTop:20}}>
@@ -82,7 +82,8 @@ class NoteEdit extends Component{
                 />
             </View>
         </ScrollView>
-        </Theme.consumer>
+            )}
+        </Theme.Consumer>
         )
     }
 

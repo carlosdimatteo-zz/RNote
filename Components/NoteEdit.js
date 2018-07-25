@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 
 import {View,Text,TextInput,Button,Alert, ScrollView, Image} from 'react-native'
-
+import {Theme } from './ThemeProvider'
 import {database} from '../Database'
 
 
@@ -72,8 +72,8 @@ class NoteEdit extends Component{
         return(
 
 
-            <Theme.consumer>
-            {({colors :{primary,secondary,dark,light,textDefault,textPrimary,textSecondary}})=>(
+            <Theme.Consumer>
+            {({theme:{colors :{primary,secondary,dark,light,textDefault,textPrimary,textSecondary}},changeTheme})=>(
 
                 <ScrollView>
             <View style={{flex: 1,flexDirection: 'column'}}>
@@ -130,7 +130,7 @@ class NoteEdit extends Component{
             )}
             
             
-        </Theme.consumer>
+        </Theme.Consumer>
 
             
         )

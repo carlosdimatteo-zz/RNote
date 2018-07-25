@@ -7,13 +7,13 @@ export default class ThemeProvider extends Component{
 
         state={
             colors:{
-                primary:"",
-                secondary:"",
-                dark:"",
-                light:"",
-                textDefault:"",
-                textPrimary:"",
-                textSecondary:"",
+                primary:"#000000",
+                secondary:"#000000",
+                dark:"#000000",
+                light:"#000000",
+                textDefault:"#FFFFFF",
+                textPrimary:"#FFFFFF",
+                textSecondary:"##FFFFFF",
 
             }
         }
@@ -22,7 +22,7 @@ export default class ThemeProvider extends Component{
         let colorScheme={}
         let values = Object.keys(this.state.colors)
         values.map((values,index)=>{
-            colorScheme[value]=colorsArray[index]
+            colorScheme[values]=colorsArray[index]
         })
         console.log("new color scheme  "+colorScheme);
         this.setState({colors:colorScheme})
@@ -54,7 +54,7 @@ export default class ThemeProvider extends Component{
     render(){
         return (
             <Theme.Provider value={{theme:this.state,
-            changeTheme:this.changeTheme
+            changeTheme:(scheme)=>this.changeTheme(scheme)
             }
             }>
                 {this.props.children}
